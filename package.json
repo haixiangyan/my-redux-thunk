@@ -1,0 +1,20 @@
+{
+  "name": "my-redux-thunk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haixiang6123/my-redux-thunk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Haixiang6123/my-redux-thunk/issues"
+  },
+  "homepage": "https://github.com/Haixiang6123/my-redux-thunk#readme"
+}
