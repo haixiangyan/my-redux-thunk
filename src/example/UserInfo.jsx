@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 const UserInfo = () => {
@@ -10,7 +10,7 @@ const UserInfo = () => {
   const [id, setId] = useState('')
 
   // 根据 Id 获取 userInfo
-  const fetchUserById = (id) => {
+  const fetchUserById = (id, dispatch) => {
     if (loading) return
 
     return new Promise(resolve => {
@@ -27,7 +27,7 @@ const UserInfo = () => {
         setLoading(false)
 
         resolve(newUserInfo)
-      }, 2000)
+      }, 1000)
     })
   }
 
@@ -35,7 +35,7 @@ const UserInfo = () => {
     <div>
       <div>
         <input value={id} onChange={e => setId(e.target.value)}/>
-        <button onClick={() => fetchUserById(id)}>getUserInfo</button>
+        <button onClick={() => fetchUserById(id, dispatch)}>getUserInfo</button>
       </div>
 
       {
