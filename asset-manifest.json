@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.js": "/react-gh-pages/static/js/main.0b2a7583.chunk.js",
-    "main.js.map": "/react-gh-pages/static/js/main.0b2a7583.chunk.js.map",
-    "runtime-main.js": "/react-gh-pages/static/js/runtime-main.0eda8139.js",
-    "runtime-main.js.map": "/react-gh-pages/static/js/runtime-main.0eda8139.js.map",
-    "static/js/2.281c2eab.chunk.js": "/react-gh-pages/static/js/2.281c2eab.chunk.js",
-    "static/js/2.281c2eab.chunk.js.map": "/react-gh-pages/static/js/2.281c2eab.chunk.js.map",
-    "index.html": "/react-gh-pages/index.html",
-    "static/js/2.281c2eab.chunk.js.LICENSE.txt": "/react-gh-pages/static/js/2.281c2eab.chunk.js.LICENSE.txt"
+    "main.js": "/my-redux-thunk/static/js/main.0b2a7583.chunk.js",
+    "main.js.map": "/my-redux-thunk/static/js/main.0b2a7583.chunk.js.map",
+    "runtime-main.js": "/my-redux-thunk/static/js/runtime-main.217ebbf5.js",
+    "runtime-main.js.map": "/my-redux-thunk/static/js/runtime-main.217ebbf5.js.map",
+    "static/js/2.281c2eab.chunk.js": "/my-redux-thunk/static/js/2.281c2eab.chunk.js",
+    "static/js/2.281c2eab.chunk.js.map": "/my-redux-thunk/static/js/2.281c2eab.chunk.js.map",
+    "index.html": "/my-redux-thunk/index.html",
+    "static/js/2.281c2eab.chunk.js.LICENSE.txt": "/my-redux-thunk/static/js/2.281c2eab.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0eda8139.js",
+    "static/js/runtime-main.217ebbf5.js",
     "static/js/2.281c2eab.chunk.js",
     "static/js/main.0b2a7583.chunk.js"
   ]
