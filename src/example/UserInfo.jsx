@@ -19,7 +19,7 @@ const UserInfo = () => {
       setTimeout(() => {
         const newUserInfo = {
           id: id,
-          name: '新名字 ' + id
+          name: id + '号技师'
         }
 
         dispatch({type: 'SET_USER', payload: newUserInfo})
