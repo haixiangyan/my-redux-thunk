@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import {bindActionCreators} from 'redux'
-import {connect, useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 // 根据 Id 获取 userInfo
-const fetchUserById = (dispatch) => (id) => {
+const fetchUserById = (id) => (dispatch) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const newUserInfo = {
@@ -18,15 +17,18 @@ const fetchUserById = (dispatch) => (id) => {
   })
 }
 
-const UserInfo = (props) => {
-  const {userInfo, count} = useSelector(state => state)
+const UserInfo = () => {
+  const dispatch = useDispatch()
+
+  const {userInfo} = useSelector(state => state)
 
   const [loading, setLoading] = useState(false)
   const [id, setId] = useState('')
 
   const onClick = async () => {
     setLoading(true)
-    await props.fetchUserById(id)
+    const fetchDispatch = fetchUserById(id)
+    await fetchDispatch(dispatch)
     setLoading(false)
   }
 
@@ -45,22 +47,8 @@ const UserInfo = (props) => {
           </div>
         )
       }
-
-      <div>
-        <p>服务次数: {count}</p>
-        <button onClick={() => props.increment(3)}>+1</button>
-        <button onClick={props.decrement}>-1</button>
-      </div>
     </div>
   )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchUserById: fetchUserById(dispatch),
-  ...bindActionCreators({
-    increment: (diff) => ({type: 'INCREMENT', payload: diff}),
-    decrement: () => ({type: 'DECREMENT'}),
-  }, dispatch)
-})
-
-export default connect(null, mapDispatchToProps)(UserInfo)
+export default UserInfo
