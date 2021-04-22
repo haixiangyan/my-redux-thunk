@@ -1,41 +1,39 @@
-import React, {useCallback, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useState} from 'react'
+import {connect, useSelector} from 'react-redux'
 
-const UserInfo = () => {
-  const dispatch = useDispatch()
+// 根据 Id 获取 userInfo
+const fetchUserById = (dispatch) => (id) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const newUserInfo = {
+        id: id,
+        name: id + '号技师'
+      }
 
+      dispatch({type: 'SET_USER', payload: newUserInfo})
+
+      resolve(newUserInfo)
+    }, 1000)
+  })
+}
+
+const UserInfo = (props) => {
   const userInfo = useSelector(state => state.userInfo)
 
   const [loading, setLoading] = useState(false)
   const [id, setId] = useState('')
 
-  // 根据 Id 获取 userInfo
-  const fetchUserById = (id, dispatch) => {
-    if (loading) return
-
-    return new Promise(resolve => {
-      setLoading(true)
-
-      setTimeout(() => {
-        const newUserInfo = {
-          id: id,
-          name: id + '号技师'
-        }
-
-        dispatch({type: 'SET_USER', payload: newUserInfo})
-
-        setLoading(false)
-
-        resolve(newUserInfo)
-      }, 1000)
-    })
+  const onClick = async () => {
+    setLoading(true)
+    await props.fetchUserById(id)
+    setLoading(false)
   }
 
   return (
     <div>
       <div>
         <input value={id} onChange={e => setId(e.target.value)}/>
-        <button onClick={() => fetchUserById(id, dispatch)}>getUserInfo</button>
+        <button onClick={onClick}>getUserInfo</button>
       </div>
 
       {
@@ -50,4 +48,8 @@ const UserInfo = () => {
   )
 }
 
-export default UserInfo
+const mapDispatchToProps = (dispatch) => ({
+  fetchUserById: fetchUserById(dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(UserInfo)

@@ -2,8 +2,8 @@ import {createStore} from 'redux'
 
 const initState = {
   userInfo: {
-    id: 11,
-    name: 'Jack',
+    id: 0,
+    name: '',
   }
 }
 
