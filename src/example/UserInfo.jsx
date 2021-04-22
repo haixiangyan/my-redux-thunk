@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {bindActionCreators} from 'redux'
 import {connect, useSelector} from 'react-redux'
 
 // 根据 Id 获取 userInfo
@@ -18,7 +19,7 @@ const fetchUserById = (dispatch) => (id) => {
 }
 
 const UserInfo = (props) => {
-  const userInfo = useSelector(state => state.userInfo)
+  const {userInfo, count} = useSelector(state => state)
 
   const [loading, setLoading] = useState(false)
   const [id, setId] = useState('')
@@ -44,12 +45,22 @@ const UserInfo = (props) => {
           </div>
         )
       }
+
+      <div>
+        <p>服务次数: {count}</p>
+        <button onClick={() => props.increment(3)}>+1</button>
+        <button onClick={props.decrement}>-1</button>
+      </div>
     </div>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUserById: fetchUserById(dispatch)
+  fetchUserById: fetchUserById(dispatch),
+  ...bindActionCreators({
+    increment: (diff) => ({type: 'INCREMENT', payload: diff}),
+    decrement: () => ({type: 'DECREMENT'}),
+  }, dispatch)
 })
 
 export default connect(null, mapDispatchToProps)(UserInfo)
