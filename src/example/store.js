@@ -1,4 +1,5 @@
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
+import thunkMiddleware from "../lib/redux-thunk";
 
 const initState = {
   userInfo: {
@@ -13,7 +14,6 @@ const reducer = (state = initState, action) => {
     case 'SET_USER':
       return {...state, userInfo: action.payload}
     case 'INCREMENT':
-      console.log(action)
       return {...state, count: state.count + 1}
     case 'DECREMENT':
       return {...state, count: state.count - 1}
@@ -22,6 +22,6 @@ const reducer = (state = initState, action) => {
   }
 }
 
-const store = createStore(reducer, initState)
+const store = createStore(reducer, initState, applyMiddleware(thunkMiddleware))
 
 export default store

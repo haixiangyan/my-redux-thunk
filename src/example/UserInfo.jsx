@@ -27,8 +27,7 @@ const UserInfo = () => {
 
   const onClick = async () => {
     setLoading(true)
-    const fetchDispatch = fetchUserById(id)
-    await fetchDispatch(dispatch)
+    await dispatch(fetchUserById(id))
     setLoading(false)
   }
 
