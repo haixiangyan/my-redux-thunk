@@ -493,13 +493,13 @@ export default function promiseMiddleware({ dispatch }) {
 
 需要注意的是，redux-thunk 和后面两者其实并不是一个等级的库，后面两都除了提供 pattern 的 “翻译” 功能之外还有很多如 error handling 这样的特性，这里不展开说了。
 
-### dispatch 到底是异步的还是同步的
+### dispatch 到底是异步的还是同步的？
 
 刚开始学习的人看到 `await dispatch(getUserById(id))` 就会觉得加了中间件后 `dispatch` 是个异步函数，但是 redux 文档说了 `dispatch` 是同步的，感觉很蒙逼。
 
 解析一下无论加了多少个中间件，最原始的 `dispatch` 函数一定是个同步函数。之所以可以 `await` 是因为 `getUserById` 返回的函数是异步的，当 `dispatch(getUserById(id))` 时其实是执行了 `getUserById` 的返回函数，此时 `dispatch` 确实是异步的。但是，对于普通的 `dispatch({type: 'SET_USER', payload: ...})` 是同步的。
 
-### 要不要使用 redux-thunk
+### 要不要使用 redux-thunk？
 
 如果你在第 1 步的时候就觉得依不依赖 `dispatch` 对我都没什么影响，在组件里直接用 `dispatch` 也很方便呀。那完全不用管理什么 thunk，saga 的，安心撸页面就可以了。
 
