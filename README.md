@@ -460,25 +460,46 @@ const fetchUserById = (id) => (dispatch, getState, env) => {
 
 ## 总结
 
-### thunk pattern
+最后来回答一些我在 redux 社区里看到的一些问题。
+
+### redux-thunk 到底解决了什么问题？
 
 **会发现 redux-thunk 并没有解决什么实际问题，只是提供了一种写代码的 “thunk 套路”，然后在 dispatch 的时候自动 “解析” 了这样的套路。**
 
-那有没有别的 pattern 呢？有的，比如你可以写成 generator 的形式，`dispatch(generator)`，再比如你写成 Promise 的形式，然后 `dispach(acitonPromise)` 。甚至，你可以定义这个 pattern 为：`(我的参数) => (dispatch) => (getState) => {...}` 都无所谓，只不过需要合理用中间件去 “解析” 这样 pattern。
+那有没有别的 pattern 呢？有的，再比如你写成 Promise 的形式，然后 `dispach(acitonPromise)` ，然后自己在中间件里解析这个 Promise：
 
-### redux-thunk vs redux-saga vs redux-loop
+```js
+export default function promiseMiddleware({ dispatch }) {
+  return next => action => {
+    if (!isFSA(action)) {
+      return isPromise(action) ? action.then(dispatch) : next(action);
+    }
 
-目前来说，redux-thunk, redux-saga 以及 redux-loop 是比较常用的 “pattern 解析器”，他们自己都提供了一套属于自己的 pattern，让开发者在自己的函数里随意 dispatch。
+    return isPromise(action.payload)
+      ? action.payload
+          .then(result => dispatch({ ...action, payload: result }))
+          .catch(error => {
+            dispatch({ ...action, payload: error, error: true });
+            return Promise.reject(error);
+          })
+      : next(action);
+  };
+}
+```
+
+写好了吧？再发个 npm 包吧？OK，一个月下载量 7 万的 redux-promise 中间件就实现了。啊？这么简单的代码都值 7 万？不行，我也要自己编 pattern，把 Promise 改成 generator：`dispatch(actionGenerator)` 不就又一个 pattern 了，但是这个已经被 redux-saga 注册专利了。呃，那用 RxJs？但是被 redux-observable 实现了。
+
+令人遗憾的是，基本上你能想到的 pattern 都被开发得差不多了。目前来说，redux-thunk, redux-saga 以及 redux-loop 是比较常用的 “pattern 解析器”，他们自己都提供了一套属于自己的 pattern，让开发者在自己的框架里随意 dispatch。
 
 需要注意的是，redux-thunk 和后面两者其实并不是一个等级的库，后面两都除了提供 pattern 的 “翻译” 功能之外还有很多如 error handling 这样的特性，这里不展开说了。
 
-### dispatch 到底是异步的还是同步的
+### dispatch 到底是异步的还是同步的？
 
 刚开始学习的人看到 `await dispatch(getUserById(id))` 就会觉得加了中间件后 `dispatch` 是个异步函数，但是 redux 文档说了 `dispatch` 是同步的，感觉很蒙逼。
 
 解析一下无论加了多少个中间件，最原始的 `dispatch` 函数一定是个同步函数。之所以可以 `await` 是因为 `getUserById` 返回的函数是异步的，当 `dispatch(getUserById(id))` 时其实是执行了 `getUserById` 的返回函数，此时 `dispatch` 确实是异步的。但是，对于普通的 `dispatch({type: 'SET_USER', payload: ...})` 是同步的。
 
-### 要不要使用 redux-thunk
+### 要不要使用 redux-thunk？
 
 如果你在第 1 步的时候就觉得依不依赖 `dispatch` 对我都没什么影响，在组件里直接用 `dispatch` 也很方便呀。那完全不用管理什么 thunk，saga 的，安心撸页面就可以了。
 
@@ -487,3 +508,4 @@ redux-thunk 说白了也只是提供一种代码书写的 pattern，对提取公
 比如，就刚刚这个需求，只是拿个用户信息设置一下，这么点代码放在组件里一点问都没有，还谈不上优化。就算这个代码被用了 2 ~ 3 次了，我觉得还是可以不用这么快来优化。除非出现 5 ~ 7 次的重复了并且代码量很大了，那么可以考虑提取为公共函数。
 
 有时过度设计会造成严重的反噬，出现一改就崩的局面。而重复冗余的代码却可以在需求变化多端的项目中实现增量优化。优化与重复总是在天平的左右，做项目时应该保持一种天然平衡，而不是走向极端。
+
