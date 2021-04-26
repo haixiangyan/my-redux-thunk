@@ -23,7 +23,7 @@ const reducer = (state = initState, action) => {
 const store = createStore(
   reducer,
   initState,
-  applyMiddleware(thunkMiddleware.withExtraArgs('development'))
+  applyMiddleware(thunkMiddleware.withExtraArgument('development'))
 )
 
 export default store

@@ -10,6 +10,6 @@ function createThunkMiddleware(extraArgs) {
 
 const thunkMiddleware = createThunkMiddleware()
 
-thunkMiddleware.withExtraArgs = createThunkMiddleware
+thunkMiddleware.withExtraArgument = createThunkMiddleware
 
 export default thunkMiddleware
