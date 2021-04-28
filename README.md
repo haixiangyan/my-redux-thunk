@@ -4,6 +4,10 @@
 
 [![Build Status](https://www.travis-ci.com/Haixiang6123/my-redux-thunk.svg?branch=main)](https://www.travis-ci.com/Haixiang6123/my-redux-thunk)
 
+> 文章源码: https://github.com/Haixiang6123/my-redux-thunk
+> 
+> 参考轮子: https://www.npmjs.com/package/redux-thunk
+
 哈？redux-thunk 不就是那个只有 14 行代码的轮子嘛？我一行就能写出来还要你来教我做事？
 
 不错，redux-thunk 是一个非常小的库，不到 5 分钟就能理解并造出来。但是今天我并不想从 “怎么造” 这个角度来讲这个轮子，而是想从 “为什么” 这个角度来聊一聊这个轮子的是怎么出现的。
